@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "291614141186",
+    "firebase_url": "https://oseke-academy-63ea9.firebaseio.com",
+    "project_id": "oseke-academy-63ea9",
+    "storage_bucket": "oseke-academy-63ea9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291614141186:android:fbb8f32f18f70260",
+        "android_client_info": {
+          "package_name": "com.example.osekeacademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291614141186-ungij60mrfrd37pn6rvq1b2o8lc5pfvk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.osekeacademy",
+            "certificate_hash": "8e359b0666fbb94b5d04fc652a380ba07b8cd02f"
+          }
+        },
+        {
+          "client_id": "291614141186-76n1bsed5m10ael83725t3lodc1btbif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiBvGAXZv0hDzXC0yS89wfoFubkmPTLeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291614141186-76n1bsed5m10ael83725t3lodc1btbif.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
