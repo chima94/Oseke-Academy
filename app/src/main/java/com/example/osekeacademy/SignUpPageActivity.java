@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +33,8 @@ public class SignUpPageActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private TextView signUpTextView;
     private FirebaseDatabase database;
+    private ProgressBar progressBar;
+    private Button buttonSignUp;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     private FirebaseAuth mAuth;
@@ -44,6 +49,8 @@ public class SignUpPageActivity extends AppCompatActivity {
         password = findViewById(R.id.signUpPassword);
         confirmPassword = findViewById(R.id.signUpConfirmPassword);
         signUpTextView = findViewById(R.id.signUpTextView);
+        progressBar = findViewById(R.id.signUpProgressbar);
+        buttonSignUp = findViewById(R.id.buttonSignUp);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
@@ -86,11 +93,12 @@ public class SignUpPageActivity extends AppCompatActivity {
     public void signUpButton(View view){
         if(!isEmpty()) {
             if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
-                Toast.makeText(this, "password and confirm passsword does match!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "password and confirm passsword does not match!", Toast.LENGTH_SHORT).show();
             }if(!email.getText().toString().trim().matches(emailPattern)){
                 email.setError("required");
             }
             else{
+                Inprogress(true);
                 mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -108,6 +116,10 @@ public class SignUpPageActivity extends AppCompatActivity {
 
                                        @Override
                                        public void dataIsInserted() {
+                                           Inprogress(false);
+                                           Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                           startActivity(intent);
+                                           finish();return;
 
                                        }
 
@@ -125,9 +137,27 @@ public class SignUpPageActivity extends AppCompatActivity {
 
                                 // ...
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Inprogress(false);
+                        Toast.makeText(SignUpPageActivity.this, "sign in failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
+            }
+        }
+
+        private void Inprogress(boolean x){
+            if(x){
+                progressBar.setVisibility(View.VISIBLE);
+                buttonSignUp.setEnabled(false);
+                signUpTextView.setVisibility(View.INVISIBLE);
+            }else{
+                progressBar.setVisibility(View.INVISIBLE);
+                buttonSignUp.setEnabled(true);
+                signUpTextView.setVisibility(View.VISIBLE);
             }
         }
     }
