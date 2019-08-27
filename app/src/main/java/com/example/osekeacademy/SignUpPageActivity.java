@@ -63,7 +63,12 @@ public class SignUpPageActivity extends AppCompatActivity {
             }
         });
 
-
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null){
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+            finish();return;
+        }
 
     }
 
